@@ -12,7 +12,12 @@
       "Bash(pyinstaller --onefile --add-data \"templates;templates\" --name \"douyin_tool\" --noconsole app.py)",
       "Bash(timeout 8 ./douyin_tool.exe)",
       "Bash(git init *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git config *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(git commit *)"
     ]
   }
 }

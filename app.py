@@ -2,6 +2,9 @@ import os
 import re
 import sys
 import uuid
+from dotenv import load_dotenv
+
+load_dotenv()  # 从 .env 文件加载环境变量
 from flask import Flask, render_template, request, jsonify, send_file
 from parser import parse_douyin_link, download_video
 from config import is_oss_configured
