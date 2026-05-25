@@ -349,91 +349,94 @@
     to { opacity: 1; }
   }
   .video-wrapper {
-    flex: 1;
+    flex: 0 0 auto;
+    height: 55%;
     background: #0a0a0f;
     display: flex; align-items: center; justify-content: center;
-    min-height: 0;
     position: relative;
+    border-radius: 0 0 4px 4px;
   }
   .video-wrapper video {
     width: 100%; height: 100%;
     object-fit: contain;
     display: block;
   }
-  .video-wrapper::after {
-    content: "";
-    position: absolute; inset: 0; pointer-events: none;
-    background: repeating-linear-gradient(
-      0deg, transparent, transparent 2px,
-      rgba(255,255,255,0.012) 2px, rgba(255,255,255,0.012) 4px
-    );
-  }
 
-  /* Info bar */
-  .info-bar {
-    background: #fafaff;
+  /* Result actions card — below video */
+  .result-actions {
+    flex: 1;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    padding: 20px 28px;
+    background: #fff;
     border-top: 1px solid var(--border);
-    padding: 16px 24px;
-    display: flex; align-items: center; gap: 16px;
-    flex-wrap: wrap;
   }
-  .info-bar .vid-title {
-    font-weight: 700; font-size: 14px; color: var(--text);
+  .result-actions .vid-title {
+    font-weight: 700; font-size: 15px; color: var(--text);
     letter-spacing: 0.02em;
-    flex: 1; min-width: 120px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .info-bar .url-pill {
+  .result-actions .url-line {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--text-muted);
     font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-secondary);
-    background: #f3f3f8;
-    padding: 7px 16px; border-radius: 20px;
-    border: 1px solid var(--border-light);
-    max-width: 280px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    word-break: break-all;
+    line-height: 1.4;
+    padding: 8px 12px;
+    background: #f7f7fb;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  .info-bar .url-pill:hover {
+  .result-actions .url-line:hover {
     background: #eeeef5;
-    color: var(--text);
+    color: var(--text-secondary);
   }
-  .info-bar .btn-download {
-    padding: 10px 24px;
-    font-size: 13px; font-weight: 700;
-    background: linear-gradient(135deg, var(--green), #009e56);
-    color: #fff; border: none; border-radius: 10px;
+  .url-line .copy-hint {
+    font-family: var(--font-display);
+    font-size: 10px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+  .result-actions .btn-row {
+    display: flex; gap: 12px; align-items: stretch; justify-content: center;
+  }
+  .result-actions .btn-download {
+    padding: 16px 48px;
+    font-size: 17px; font-weight: 800;
+    background: linear-gradient(135deg, var(--pink), #e01842);
+    color: #fff; border: none; border-radius: 12px;
     cursor: pointer;
     font-family: var(--font-display);
-    letter-spacing: 0.04em;
-    box-shadow: 0 2px 10px rgba(0,179,104,0.2);
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 16px rgba(254,44,85,0.25);
+    transition: all 0.25s ease;
+  }
+  .result-actions .btn-download:hover {
+    box-shadow: 0 6px 24px rgba(254,44,85,0.4);
+    transform: translateY(-2px);
+  }
+  .result-actions .btn-download:active { transform: scale(0.97); }
+
+  .result-actions .btn-copy {
+    padding: 16px 48px;
+    font-size: 17px; font-weight: 800;
+    background: #fff;
+    border: 2px solid #e0e0e8;
+    border-radius: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
     transition: all 0.25s ease;
     white-space: nowrap;
   }
-  .info-bar .btn-download:hover {
-    box-shadow: 0 4px 18px rgba(0,179,104,0.3);
-    transform: translateY(-1px);
-  }
-  .info-bar .btn-download:active { transform: scale(0.97); }
-
-  .info-bar .btn-sm {
-    padding: 8px 16px;
-    font-size: 11px; font-weight: 600;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text-secondary);
-    cursor: pointer;
-    font-family: var(--font-display);
-    letter-spacing: 0.04em;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    box-shadow: var(--shadow-sm);
-  }
-  .info-bar .btn-sm:hover {
-    border-color: #c8c8d4;
-    color: var(--text);
+  .result-actions .btn-copy:hover {
+    border-color: var(--pink);
+    color: var(--pink);
+    background: var(--pink-soft);
   }
 
   /* OSS note badge */
@@ -582,12 +585,17 @@
         <div class="video-wrapper">
           <video id="videoPlayer" controls playsinline></video>
         </div>
-        <div class="oss-badge" id="ossBadge">OSS 未配置 — 视频已保存至本地</div>
-        <div class="info-bar">
+        <div class="result-actions">
           <span class="vid-title" id="videoTitle">—</span>
-          <span class="url-pill" id="ossUrlPill" title="点击复制" onclick="copyUrl()">—</span>
-          <button class="btn-download" id="btnDownload" onclick="downloadVideo()">下载</button>
-          <button class="btn-sm" onclick="copyDownloadUrl()">复制链接</button>
+          <div class="oss-badge" id="ossBadge">OSS 未配置 — 视频已保存至本地</div>
+          <div class="btn-row">
+            <button class="btn-download" id="btnDownload" onclick="downloadVideo()">下载视频</button>
+            <button class="btn-copy" onclick="copyDownloadUrl()">复制链接</button>
+          </div>
+          <div class="url-line" id="ossUrlLine" title="点击复制 OSS 链接" onclick="copyUrl()">
+            <span id="ossUrlPill">—</span>
+            <span class="copy-hint">点击复制</span>
+          </div>
         </div>
       </div>
     </div>
@@ -601,6 +609,7 @@ const emptyState = document.getElementById("emptyState");
 const resultContent = document.getElementById("resultContent");
 const videoPlayer = document.getElementById("videoPlayer");
 const videoTitle = document.getElementById("videoTitle");
+const ossUrlLine = document.getElementById("ossUrlLine");
 const ossUrlPill = document.getElementById("ossUrlPill");
 const ossBadge = document.getElementById("ossBadge");
 const btnDownload = document.getElementById("btnDownload");
@@ -692,14 +701,14 @@ async function handleSubmit() {
       progressFill.style.width = "100%";
       statusMsg.textContent = "全部完成 ✓";
       ossUrlPill.textContent = data.oss_url;
-      ossUrlPill.style.display = "";
+      ossUrlLine.style.display = "";
       ossBadge.classList.remove("show");
     } else {
       setStep(stepUpload, "done");
       progressFill.style.width = "100%";
       statusMsg.textContent = "完成（OSS 未配置）";
       ossUrlPill.textContent = data.download_url;
-      ossUrlPill.style.display = "";
+      ossUrlLine.style.display = "";
       ossBadge.classList.add("show");
     }
 
