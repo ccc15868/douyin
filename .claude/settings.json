@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip list *)",
+      "Bash(pip3 list *)",
+      "Bash(python app.py)",
+      "Bash(sleep 3 && cat \"/c/Users/esune/AppData/Local/Temp/claude/d--test-douyin/6479d61c-69b9-4df6-8994-50968ded9a97/tasks/br2hchvjj.output\")",
+      "Read(//c/Users/esune/AppData/Local/Temp/claude/d--test-douyin/6479d61c-69b9-4df6-8994-50968ded9a97/tasks/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:5000)",
+      "Bash(curl -s http://127.0.0.1:5000)",
+      "Bash(pip install *)",
+      "Bash(pyinstaller --onefile --add-data \"templates;templates\" --name \"douyin_tool\" --noconsole app.py)",
+      "Bash(timeout 8 ./douyin_tool.exe)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}
